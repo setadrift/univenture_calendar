@@ -141,32 +141,51 @@ function updateSelectedDatesList(selectedDates: unknown[], session: number) {
 updateSelectedDatesList(preferredDatePicker1.selectedDates, 1);
 updateSelectedDatesList(preferredDatePicker2.selectedDates, 2);
 
-const form = document.getElementById('custom-availability-form') as HTMLFormElement;
+const form = document.getElementById('wf-form-custom_dates_form') as HTMLFormElement;
 
 if (form) {
   form.addEventListener('submit', (event) => {
     event.preventDefault();
+
     // Get the selected dates and times from Flatpickr
     const session1SelectedDates = preferredDatePicker1.selectedDates;
     const session2SelectedDates = preferredDatePicker2.selectedDates;
 
     // Convert the selected dates to an array of strings
-    const session1SelectedDatesStrings = session1SelectedDates.map(
-      (date: { toLocaleString: () => unknown }) => date.toLocaleString()
-    );
-    const session2SelectedDatesStrings = session2SelectedDates.map(
-      (date: { toLocaleString: () => unknown }) => date.toLocaleString()
-    );
+    const session1SelectedDatesStrings = session1SelectedDates.map((date) => date.toLocaleString());
+    const session2SelectedDatesStrings = session2SelectedDates.map((date) => date.toLocaleString());
 
     // Get the email input element
-    const emailInput = document.getElementById('email') as HTMLInputElement;
+    const emailInput = document.getElementById('email_2') as HTMLInputElement;
     const email = emailInput.value;
 
     // Check if the email ends with the "@umontreal.ca"
     if (!email.endsWith('@umontreal.ca')) {
-      alert('Please enter a valid email address ending with "@umontreal.ca".');
+      const emailError = document.getElementById('emailError');
+      if (emailError) {
+        emailError.style.display = 'block';
+      }
       return;
     }
+    const emailError = document.getElementById('emailError');
+    if (emailError) {
+      emailError.style.display = 'none';
+    }
+
+    // Add the selectedDatesStrings array to your userAvailabilities object
+    const formElements = form.elements as HTMLFormControlsCollection;
+    const name = formElements.namedItem('name-2') as HTMLInputElement;
+    const note = formElements.namedItem('note') as HTMLInputElement;
+    const userAvailabilities = {
+      name: name.value,
+      email: email,
+      session1: session1SelectedDatesStrings,
+      session2: session2SelectedDatesStrings,
+      note: note.value,
+    };
+
+    // Submit the userAvailabilities data here
+    console.log(userAvailabilities);
 
     // Display the custom modal
     const customModal = document.getElementById('customModal');
@@ -184,25 +203,12 @@ if (form) {
       });
     }
 
-    // Add the selectedDatesStrings array to your userAvailabilities object
-    const formElements = form.elements as HTMLFormControlsCollection;
-    const name = formElements.namedItem('name') as HTMLInputElement;
-    const userAvailabilities = {
-      name: name.value,
-      email: email,
-      session1: session1SelectedDatesStrings,
-      session2: session2SelectedDatesStrings,
-    };
-
-    // Submit the userAvailabilities data here
-    // eslint-disable-next-line no-console
-    console.log(userAvailabilities);
-
     // Clear the selected dates in Flatpickr and update the list
     preferredDatePicker1.clear();
     preferredDatePicker2.clear();
     updateSelectedDatesList([], 1);
     updateSelectedDatesList([], 2);
+
     // Call the showCustomModal function
     showCustomModal();
   });
