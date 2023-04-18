@@ -98,7 +98,7 @@ const preferredDatePicker2 = flatpickr('#Preferred-Date-2', {
 }) as flatpickr.Instance;
 
 // Update the updateSelectedDatesList function to handle the session number
-function updateSelectedDatesList(selectedDates: any[], session: number) {
+function updateSelectedDatesList(selectedDates: unknown[], session: number) {
   const listElement = document.querySelector(`#selected-dates-list-${session}`);
   if (!listElement) return;
 
@@ -152,11 +152,21 @@ if (form) {
 
     // Convert the selected dates to an array of strings
     const session1SelectedDatesStrings = session1SelectedDates.map(
-      (date: { toLocaleString: () => any }) => date.toLocaleString()
+      (date: { toLocaleString: () => unknown }) => date.toLocaleString()
     );
     const session2SelectedDatesStrings = session2SelectedDates.map(
-      (date: { toLocaleString: () => any }) => date.toLocaleString()
+      (date: { toLocaleString: () => unknown }) => date.toLocaleString()
     );
+
+    // Get the email input element
+    const emailInput = document.getElementById('email') as HTMLInputElement;
+    const email = emailInput.value;
+
+    // Check if the email ends with the "@umontreal.ca"
+    if (!email.endsWith('@umontreal.ca')) {
+      alert('Please enter a valid email address ending with "@umontreal.ca".');
+      return;
+    }
 
     // Display the custom modal
     const customModal = document.getElementById('customModal');
@@ -177,15 +187,15 @@ if (form) {
     // Add the selectedDatesStrings array to your userAvailabilities object
     const formElements = form.elements as HTMLFormControlsCollection;
     const name = formElements.namedItem('name') as HTMLInputElement;
-    const email = formElements.namedItem('email') as HTMLInputElement;
     const userAvailabilities = {
       name: name.value,
-      email: email.value,
+      email: email,
       session1: session1SelectedDatesStrings,
       session2: session2SelectedDatesStrings,
     };
 
     // Submit the userAvailabilities data here
+    // eslint-disable-next-line no-console
     console.log(userAvailabilities);
 
     // Clear the selected dates in Flatpickr and update the list
