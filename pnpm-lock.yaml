@@ -6,7 +6,12 @@ specifiers:
   '@finsweet/eslint-config': ^2.0.2
   '@finsweet/ts-utils': ^0.38.0
   '@finsweet/tsconfig': ^1.2.0
+  '@fullcalendar/core': ^6.1.4
+  '@fullcalendar/daygrid': ^6.1.4
+  '@fullcalendar/list': ^6.1.4
+  '@fullcalendar/timegrid': ^6.1.4
   '@playwright/test': ^1.31.2
+  '@types/flatpickr': ^3.1.2
   '@typescript-eslint/eslint-plugin': ^5.54.1
   '@typescript-eslint/parser': ^5.54.1
   cross-env: ^7.0.3
@@ -15,11 +20,17 @@ specifiers:
   eslint-config-prettier: ^8.7.0
   eslint-plugin-prettier: ^4.2.1
   eslint-plugin-simple-import-sort: ^10.0.0
+  flatpickr: ^4.6.13
   prettier: ^2.8.4
   typescript: ^4.9.5
 
 dependencies:
   '@finsweet/ts-utils': 0.38.0
+  '@fullcalendar/core': 6.1.4
+  '@fullcalendar/daygrid': 6.1.4_@fullcalendar+core@6.1.4
+  '@fullcalendar/list': 6.1.4_@fullcalendar+core@6.1.4
+  '@fullcalendar/timegrid': 6.1.4_@fullcalendar+core@6.1.4
+  flatpickr: 4.6.13
 
 devDependencies:
   '@changesets/changelog-git': 0.1.14
@@ -27,6 +38,7 @@ devDependencies:
   '@finsweet/eslint-config': 2.0.2_x4p2uma3wxavlhmcs5z4dpzwle
   '@finsweet/tsconfig': 1.2.0
   '@playwright/test': 1.31.2
+  '@types/flatpickr': 3.1.2
   '@typescript-eslint/eslint-plugin': 5.54.1_mlk7dnz565t663n4razh6a6v6i
   '@typescript-eslint/parser': 5.54.1_ycpbpc6yetojsgtrx3mwntkhsu
   cross-env: 7.0.3
@@ -502,6 +514,37 @@ packages:
     resolution: {integrity: sha512-Wq9Pz1Z/8aWLmJPms/P37kYQrAh1iNpHv0MMrekYitmuJ6MMFjhROQaZI+JfJkXicqng7vZHCrF0C+SN55be2Q==}
     dev: true
 
+  /@fullcalendar/core/6.1.4:
+    resolution: {integrity: sha512-ZDD0Owv0LezAk14nsRNaOc9nbowItGmT0mnjOhEw+L6B8P5eads8yYaNA9itn70MWoOjiAG8xqD7Yk1iJGxqgQ==}
+    dependencies:
+      preact: 10.13.1
+    dev: false
+
+  /@fullcalendar/daygrid/6.1.4_@fullcalendar+core@6.1.4:
+    resolution: {integrity: sha512-X0QWEiA/hT8GYiQzmXt9DlZTWaQbNtBHBXGtaMNcVXbGHDCzLoWTHrde/jABGfr/i2+d9sLUO4oTtwz2HVpNtQ==}
+    peerDependencies:
+      '@fullcalendar/core': ~6.1.4
+    dependencies:
+      '@fullcalendar/core': 6.1.4
+    dev: false
+
+  /@fullcalendar/list/6.1.4_@fullcalendar+core@6.1.4:
+    resolution: {integrity: sha512-RY2fE9J7ckzhKtvHOWhlI2FnVEBC4Z9ZlgRBE2nQekX2+THt+3KnZtOQxuYGnGi30NBKx794YsXeIc6/Lnl0Ww==}
+    peerDependencies:
+      '@fullcalendar/core': ~6.1.4
+    dependencies:
+      '@fullcalendar/core': 6.1.4
+    dev: false
+
+  /@fullcalendar/timegrid/6.1.4_@fullcalendar+core@6.1.4:
+    resolution: {integrity: sha512-B2/levLKW0CyDQru75JeuASpCZml5W8sINCwVTstxxhjKmNBG3F5qvSX12DDrTdga/ySYObNNP1pKDwavKk/JQ==}
+    peerDependencies:
+      '@fullcalendar/core': ~6.1.4
+    dependencies:
+      '@fullcalendar/core': 6.1.4
+      '@fullcalendar/daygrid': 6.1.4_@fullcalendar+core@6.1.4
+    dev: false
+
   /@humanwhocodes/config-array/0.11.8:
     resolution: {integrity: sha512-UybHIJzJnR5Qc/MsD9Kr+RpO2h+/P1GhOwdiLPXK5TWk5sgTdu88bTD9UP+CKbPPh5Rni1u0GjAdYQLemG8g+g==}
     engines: {node: '>=10.10.0'}
@@ -572,6 +615,13 @@ packages:
       playwright-core: 1.31.2
     optionalDependencies:
       fsevents: 2.3.2
+    dev: true
+
+  /@types/flatpickr/3.1.2:
+    resolution: {integrity: sha512-vCEuLqfSlpPhLDOvxyYMIlX20Dwn3XSEeYf9rXfcldDQdLVrtxDdIzE82xhlEFVeHpERujCCQIqETNEUrGsVtA==}
+    deprecated: This is a stub types definition for flatpickr (https://github.com/chmln/flatpickr). flatpickr provides its own type definitions, so you don't need @types/flatpickr installed!
+    dependencies:
+      flatpickr: 4.6.13
     dev: true
 
   /@types/is-ci/3.0.0:
@@ -1438,6 +1488,9 @@ packages:
       rimraf: 3.0.2
     dev: true
 
+  /flatpickr/4.6.13:
+    resolution: {integrity: sha512-97PMG/aywoYpB4IvbvUJi0RQi8vearvU0oov1WW3k0WZPBMrTQVqekSX5CjSG/M4Q3i6A/0FKXC7RyAoAUUSPw==}
+
   /flatted/3.2.7:
     resolution: {integrity: sha512-5nqDSxl8nn5BSNxyR3n4I6eDmbolI6WT+QqR547RwxQapgjQBmtktdP+HTBb/a/zLsbzERTONyUB5pefh5TtjQ==}
     dev: true
@@ -2194,6 +2247,10 @@ packages:
     engines: {node: '>=14'}
     hasBin: true
     dev: true
+
+  /preact/10.13.1:
+    resolution: {integrity: sha512-KyoXVDU5OqTpG9LXlB3+y639JAGzl8JSBXLn1J9HTSB3gbKcuInga7bZnXLlxmK94ntTs1EFeZp0lrja2AuBYQ==}
+    dev: false
 
   /preferred-pm/3.0.3:
     resolution: {integrity: sha512-+wZgbxNES/KlJs9q40F/1sfOd/j7f1O9JaHcW5Dsn3aUUOZg3L2bjpVUcKV2jvtElYfoTuQiNeMfQJ4kwUAhCQ==}
