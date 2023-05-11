@@ -237,6 +237,12 @@ window.Webflow.push(() => {
       center: 'title',
       right: 'dayGridMonth,timeGridWeek,listPlugin',
     },
+    eventTimeFormat: {
+      hour: '2-digit',
+      minute: '2-digit',
+      hour12: false,
+    },
+    
     events,
     eventClick,
   });
