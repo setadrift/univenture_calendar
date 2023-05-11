@@ -12,6 +12,7 @@ const getEvents = (): Event[] => {
   const scripts = document.querySelectorAll<HTMLScriptElement>('[data-element="event-data"]');
   const events = [...scripts].reduce((acc, script) => {
     if (script.textContent) {
+      console.log(script.textContent); // log scirpt text content
       const eventData = JSON.parse(script.textContent);
       const event: Event = {
         ...eventData,
