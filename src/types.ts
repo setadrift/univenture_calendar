@@ -4,5 +4,5 @@ export type Event = {
   end: string | Date;
   location: string;
   session: number;
-  id: string,
+  id: string;
 };
