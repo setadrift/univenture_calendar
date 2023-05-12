@@ -18,6 +18,7 @@ const getEvents = (): Event[] => {
         start: new Date(eventData.start),
         end: new Date(eventData.end),
         session: parseInt(eventData.session, 10), // parse the session number as an integer
+        id: eventData.id,
       };
       acc.push(event);
     }
@@ -49,10 +50,17 @@ function showCustomModal() {
     });
   }
 }
-const eventClick = (arg: EventClickArg) => {
+function eventClick(arg: EventClickArg) {
   // eslint-disable-next-line no-console
   console.log('eventClick', arg.event.title);
   const selectedDate = new Date(arg.event.start as unknown as string);
+
+  const modalId = document.querySelector('#eventModal .modal-id') as HTMLElement;
+  if (modalID) {
+    modalId.textContent = arg.event.id; // Display the event's ID
+  } else {
+    throw new Error('modalId not found');
+  }
 
   const modalElement = document.querySelector('#eventModal') as HTMLElement;
   if (modalElement) {
@@ -71,7 +79,7 @@ const eventClick = (arg: EventClickArg) => {
       userAvailabilities.session2.push(selectedDate);
     }
   }
-};
+}
 
 const updateCalendar = (calendar: Calendar, session: number) => {
   const events = getEvents().filter((event) => event.session === session);
@@ -236,6 +244,11 @@ window.Webflow.push(() => {
       left: 'prev,next today',
       center: 'title',
       right: 'dayGridMonth,timeGridWeek,listPlugin',
+    },
+    eventTimeFormat: {
+      hour: '2-digit',
+      minute: '2-digit',
+      hour12: false,
     },
     events,
     eventClick,
