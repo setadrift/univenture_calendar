@@ -7,6 +7,7 @@
       "$utils/*": ["src/utils/*"]
     },
     "types": ["@finsweet/ts-utils"],
-    "outDir": "dist"
+    "outDir": "dist",
+    "lib": ["es2015", "dom"]
   }
 }

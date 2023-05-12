@@ -1,6 +1,6 @@
 import 'flatpickr/dist/flatpickr.min.css';
 
-import { Calendar, EventClickArg } from '@fullcalendar/core';
+import { Calendar, type EventClickArg } from '@fullcalendar/core';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import listPlugin from '@fullcalendar/list';
 import timeGridPlugin from '@fullcalendar/timegrid';
@@ -10,7 +10,9 @@ import type { Event } from './types';
 
 const getEvents = (): Event[] => {
   const scripts = document.querySelectorAll<HTMLScriptElement>('[data-element="event-data"]');
-  const events = [...scripts].reduce((acc, script) => {
+  const scriptsArray = Array.from(scripts);
+  
+  const events = scriptsArray.reduce((acc, script) => {
     if (script.textContent) {
       const eventData = JSON.parse(script.textContent);
       const event: Event = {
@@ -27,6 +29,7 @@ const getEvents = (): Event[] => {
 
   return events;
 };
+
 
 let selectedSession = 1;
 const userAvailabilities: { session1: Date[]; session2: Date[] } = {
@@ -56,7 +59,7 @@ function eventClick(arg: EventClickArg) {
   const selectedDate = new Date(arg.event.start as unknown as string);
 
   const modalId = document.querySelector('#eventModal .modal-id') as HTMLElement;
-  if (modalID) {
+  if (modalId) {
     modalId.textContent = arg.event.id; // Display the event's ID
   } else {
     throw new Error('modalId not found');
