@@ -8,6 +8,15 @@ import flatpickr from 'flatpickr';
 
 import type { Event } from './types';
 
+declare global {
+  interface Window { 
+    Webflow: {
+      push: (callback: () => void) => void;
+    };
+  }
+}
+
+
 const getEvents = (): Event[] => {
   const scripts = document.querySelectorAll<HTMLScriptElement>('[data-element="event-data"]');
   const scriptsArray = Array.from(scripts);
@@ -225,8 +234,8 @@ if (form) {
   });
 }
 
-window.Webflow ||= [];
-window.Webflow.push(() => {
+(window as any).Webflow = (window as any).Webflow || { push: (callback: () => void) => callback() };
+(window as any).Webflow.push(() => {
   const calendarElement = document.querySelector<HTMLDivElement>('[data-element="calendar"]');
   if (!calendarElement) return;
 
