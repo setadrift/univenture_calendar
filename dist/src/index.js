@@ -50,8 +50,8 @@ function eventClick(arg) {
     const modalStartTime = document.querySelector('#eventModal .modal-start-time');
     const modalEndTime = document.querySelector('#eventModal .modal-end-time');
     if (modalStartTime && modalEndTime) {
-        modalStartTime.textContent = arg.event.start ? arg.event.start.toISOString() : 'Not specified';
-        modalEndTime.textContent = arg.event.end ? arg.event.end.toISOString() : 'Not specified';
+        modalStartTime.textContent = arg.event.start ? arg.event.start.toLocaleString() : 'Not specified';
+        modalEndTime.textContent = arg.event.end ? arg.event.end.toLocaleString() : 'Not specified';
     }
     else {
         throw new Error('modal start time or end time elements not found');
