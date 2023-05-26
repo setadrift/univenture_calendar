@@ -8,15 +8,6 @@ import flatpickr from 'flatpickr';
 
 import type { Event } from './types';
 
-declare global {
-  interface Window { 
-    Webflow: {
-      push: (callback: () => void) => void;
-    };
-  }
-}
-
-
 const getEvents = (): Event[] => {
   const scripts = document.querySelectorAll<HTMLScriptElement>('[data-element="event-data"]');
   const scriptsArray = Array.from(scripts);
@@ -39,12 +30,7 @@ const getEvents = (): Event[] => {
   return events;
 };
 
-
-let selectedSession = 1;
-const userAvailabilities: { session1: Date[]; session2: Date[] } = {
-  session1: [],
-  session2: [],
-};
+let selectedDate: Date | null = null;
 
 function showCustomModal() {
   const customModal = document.getElementById('customModal');
@@ -62,6 +48,7 @@ function showCustomModal() {
     });
   }
 }
+
 function eventClick(arg: EventClickArg) {
   console.log('eventClick', arg.event.title);
   
@@ -94,73 +81,20 @@ function eventClick(arg: EventClickArg) {
   }
 }
 
-
-const updateCalendar = (calendar: Calendar, session: number) => {
-  const events = getEvents().filter((event) => event.session === session);
+const updateCalendar = (calendar: Calendar) => {
+  const events = getEvents();
   calendar.getEventSources().forEach((source) => source.remove());
   calendar.addEventSource(events);
 };
 
-// Create two separate Flatpickr instances
-const preferredDatePicker1 = flatpickr('#Preferred-Date-1', {
+const preferredDatePicker = flatpickr('#Preferred-Date', {
   dateFormat: 'Y-m-d H:i',
   enableTime: true,
   time_24hr: true,
-  mode: 'multiple',
-  onChange: (selectedDates) => updateSelectedDatesList(selectedDates, 1),
+  onChange: (selectedDates) => {
+    selectedDate = selectedDates[0];
+  },
 }) as flatpickr.Instance;
-
-const preferredDatePicker2 = flatpickr('#Preferred-Date-2', {
-  dateFormat: 'Y-m-d H:i',
-  enableTime: true,
-  time_24hr: true,
-  mode: 'multiple',
-  onChange: (selectedDates) => updateSelectedDatesList(selectedDates, 2),
-}) as flatpickr.Instance;
-
-// Update the updateSelectedDatesList function to handle the session number
-function updateSelectedDatesList(selectedDates: unknown[], session: number) {
-  const listElement = document.querySelector(`#selected-dates-list-${session}`);
-  if (!listElement) return;
-
-  listElement.innerHTML = ''; // Clear the list
-
-  selectedDates.forEach((date, index) => {
-    const listItem = document.createElement('li');
-    listItem.textContent = date.toLocaleString(); // Format the date and time
-
-    const deleteButton = document.createElement('button');
-    deleteButton.textContent = 'Delete date';
-    deleteButton.addEventListener('click', () => {
-      // Remove the date from the selected dates array
-      if (session === 1) {
-        preferredDatePicker1.selectedDates.splice(index, 1);
-        preferredDatePicker1.redraw();
-      } else {
-        preferredDatePicker2.selectedDates.splice(index, 1);
-        preferredDatePicker2.redraw();
-      }
-      // Update the list
-      updateSelectedDatesList(
-        session === 1 ? preferredDatePicker1.selectedDates : preferredDatePicker2.selectedDates,
-        session
-      );
-    });
-
-    listItem.appendChild(deleteButton);
-    listElement.appendChild(listItem);
-  });
-
-  // Show the list container
-  const listContainer = document.querySelector(`#selected-dates-list-${session}`) as HTMLElement;
-  if (listContainer) {
-    listContainer.style.display = selectedDates.length ? 'block' : 'none';
-  }
-}
-
-// Trigger the initial update for both lists
-updateSelectedDatesList(preferredDatePicker1.selectedDates, 1);
-updateSelectedDatesList(preferredDatePicker2.selectedDates, 2);
 
 const form = document.getElementById('wf-form-custom_dates_form') as HTMLFormElement;
 
@@ -168,13 +102,8 @@ if (form) {
   form.addEventListener('submit', (event) => {
     event.preventDefault();
 
-    // Get the selected dates and times from Flatpickr
-    const session1SelectedDates = preferredDatePicker1.selectedDates;
-    const session2SelectedDates = preferredDatePicker2.selectedDates;
-
-    // Convert the selected dates to an array of strings
-    const session1SelectedDatesStrings = session1SelectedDates.map((date) => date.toLocaleString());
-    const session2SelectedDatesStrings = session2SelectedDates.map((date) => date.toLocaleString());
+    // Get the selected date and times from Flatpickr
+    const selectedDateStr = selectedDate?.toLocaleString();
 
     // Get the email input element
     const emailInput = document.getElementById('email_2') as HTMLInputElement;
@@ -193,15 +122,14 @@ if (form) {
       emailError.style.display = 'none';
     }
 
-    // Add the selectedDatesStrings array to your userAvailabilities object
+    // Add the selectedDateStr to your userAvailabilities object
     const formElements = form.elements as HTMLFormControlsCollection;
     const name = formElements.namedItem('name-2') as HTMLInputElement;
     const note = formElements.namedItem('note') as HTMLInputElement;
     const userAvailabilities = {
       name: name.value,
       email: email,
-      session1: session1SelectedDatesStrings,
-      session2: session2SelectedDatesStrings,
+      selectedDate: selectedDateStr,
       note: note.value,
     };
 
@@ -225,11 +153,8 @@ if (form) {
       });
     }
 
-    // Clear the selected dates in Flatpickr and update the list
-    preferredDatePicker1.clear();
-    preferredDatePicker2.clear();
-    updateSelectedDatesList([], 1);
-    updateSelectedDatesList([], 2);
+    // Clear the selected date in Flatpickr
+    preferredDatePicker.clear();
 
     // Call the showCustomModal function
     showCustomModal();
@@ -242,14 +167,6 @@ if (form) {
   if (!calendarElement) return;
 
   const events = getEvents();
-  const sessionSelector = document.getElementById('session-selector') as HTMLSelectElement;
-
-  if (sessionSelector) {
-    sessionSelector.addEventListener('change', () => {
-      selectedSession = parseInt(sessionSelector.value, 10);
-      updateCalendar(calendar, selectedSession);
-    });
-  }
 
   const calendar = new Calendar(calendarElement, {
     plugins: [dayGridPlugin, timeGridPlugin, listPlugin],
