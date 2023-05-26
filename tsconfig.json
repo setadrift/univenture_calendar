@@ -1,7 +1,7 @@
 {
   "extends": "@finsweet/tsconfig",
   "compilerOptions": {
-    "rootDir": ".",
+    "rootDir": "./src",
     "baseUrl": "./",
     "paths": {
       "$utils/*": ["src/utils/*"]
@@ -9,6 +9,5 @@
     "types": ["@finsweet/ts-utils"],
     "outDir": "dist",
     "lib": ["es2015", "dom"]
-  },
-  "include": ["src/**/*"]
+  }
 }
