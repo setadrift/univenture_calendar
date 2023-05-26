@@ -1,0 +1,9 @@
+export declare const isString: (value: unknown) => value is string;
+export declare const isNumber: (value: unknown) => value is number;
+export declare const isBigint: (value: unknown) => value is bigint;
+export declare const isBoolean: (value: unknown) => value is boolean;
+export declare const isSymbol: (value: unknown) => value is symbol;
+export declare const isUndefined: (value: unknown) => value is undefined;
+export declare const isNull: (value: unknown) => value is null;
+export declare const isFunction: (value: unknown) => value is Function;
+export declare const isObject: (value: unknown) => value is Record<any, any>;

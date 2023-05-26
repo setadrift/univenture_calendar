@@ -63,10 +63,8 @@ function showCustomModal() {
   }
 }
 function eventClick(arg: EventClickArg) {
-  // eslint-disable-next-line no-console
   console.log('eventClick', arg.event.title);
-  const selectedDate = new Date(arg.event.start as unknown as string);
-
+  
   const modalId = document.querySelector('#eventModal .modal-id') as HTMLElement;
   if (modalId) {
     modalId.textContent = arg.event.id; // Display the event's ID
@@ -74,24 +72,28 @@ function eventClick(arg: EventClickArg) {
     throw new Error('modalId not found');
   }
 
+  const modalStartTime = document.querySelector('#eventModal .modal-start-time') as HTMLElement;
+  const modalEndTime = document.querySelector('#eventModal .modal-end-time') as HTMLElement;
+
+  if (modalStartTime && modalEndTime) {
+    modalStartTime.textContent = arg.event.start ? arg.event.start.toISOString() : 'Not specified'; // Display the event's start time
+    modalEndTime.textContent = arg.event.end ? arg.event.end.toISOString() : 'Not specified'; // Display the event's end time
+  } else {
+    throw new Error('modal start time or end time elements not found');
+  }
+
   const modalElement = document.querySelector('#eventModal') as HTMLElement;
   if (modalElement) {
     modalElement.style.display = 'block';
-    // get the title of the selected event and set it as the titel for the modal
     const modalTitle = document.querySelector('#eventModal .modal-title') as HTMLElement;
     if (modalTitle) {
       modalTitle.textContent = arg.event.title;
     } else {
       throw new Error('modalTitle not found');
     }
-
-    if (selectedSession === 1) {
-      userAvailabilities.session1.push(selectedDate);
-    } else {
-      userAvailabilities.session2.push(selectedDate);
-    }
   }
 }
+
 
 const updateCalendar = (calendar: Calendar, session: number) => {
   const events = getEvents().filter((event) => event.session === session);
