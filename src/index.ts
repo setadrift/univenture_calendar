@@ -63,8 +63,8 @@ function eventClick(arg: EventClickArg) {
   const modalEndTime = document.querySelector('#eventModal .modal-end-time') as HTMLElement;
 
   if (modalStartTime && modalEndTime) {
-    modalStartTime.textContent = arg.event.start ? arg.event.start.toISOString() : 'Not specified'; // Display the event's start time
-    modalEndTime.textContent = arg.event.end ? arg.event.end.toISOString() : 'Not specified'; // Display the event's end time
+    modalStartTime.textContent = arg.event.start ? arg.event.start.toLocaleString() : 'Not specified'; // Display the event's start time
+    modalEndTime.textContent = arg.event.end ? arg.event.end.toLocaleString() : 'Not specified'; // Display the event's end time
   } else {
     throw new Error('modal start time or end time elements not found');
   }
@@ -80,6 +80,7 @@ function eventClick(arg: EventClickArg) {
     }
   }
 }
+
 
 const updateCalendar = (calendar: Calendar) => {
   const events = getEvents();
