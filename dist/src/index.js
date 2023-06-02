@@ -126,6 +126,13 @@ if (form) {
         const customModal = document.getElementById('customModal');
         if (customModal) {
             customModal.style.display = 'block';
+            const successMessage = document.getElementById('success-message');
+            if (successMessage) {
+                const successMessageContent = successMessage.querySelector('div');
+                if (successMessageContent) {
+                    successMessageContent.textContent = `MERCI! Votre demande a été reçue! La date sélectionnée est : ${selectedDateStr}`;
+                }
+            }
         }
         const closeModalButton = document.getElementById('closeModal');
         if (closeModalButton) {

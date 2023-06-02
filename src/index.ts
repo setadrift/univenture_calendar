@@ -123,7 +123,7 @@ if (form) {
     const emailInput = document.getElementById('email_2') as HTMLInputElement;
     const email = emailInput.value;
 
-    // Check if the email ends with the "@umontreal.ca"
+    // Check if the email ends with "@umontreal.ca"
     if (!email.endsWith('@umontreal.ca')) {
       const emailError = document.getElementById('emailError');
       if (emailError) {
@@ -155,6 +155,15 @@ if (form) {
     const customModal = document.getElementById('customModal');
     if (customModal) {
       customModal.style.display = 'block';
+
+      // Update the success message with the selected date
+      const successMessage = document.getElementById('success-message');
+      if (successMessage) {
+        const successMessageContent = successMessage.querySelector('div');
+        if (successMessageContent) {
+          successMessageContent.textContent = `MERCI! Votre demande a été reçue! La date sélectionnée est : ${selectedDateStr}`;
+        }
+      }
     }
 
     // Close the custom modal when the close button is clicked
@@ -174,6 +183,8 @@ if (form) {
     showCustomModal();
   });
 }
+
+
 
 (window as any).Webflow = (window as any).Webflow || { push: (callback: () => void) => callback() };
 (window as any).Webflow.push(() => {
