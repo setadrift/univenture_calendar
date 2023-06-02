@@ -1,5 +1,4 @@
-import 'flatpickr/dist/flatpickr.min.css';
-
+// import 'flatpickr/dist/flatpickr.min.css';
 import { Calendar, type EventClickArg } from '@fullcalendar/core';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import listPlugin from '@fullcalendar/list';

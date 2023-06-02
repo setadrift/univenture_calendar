@@ -1,4 +1,3 @@
-import 'flatpickr/dist/flatpickr.min.css';
 import { Calendar } from '@fullcalendar/core';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import listPlugin from '@fullcalendar/list';
