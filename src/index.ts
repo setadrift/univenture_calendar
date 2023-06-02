@@ -1,5 +1,6 @@
 // import 'flatpickr/dist/flatpickr.min.css';
-import { Calendar, type EventClickArg } from '@fullcalendar/core';
+import { Calendar } from '@fullcalendar/core';
+import type { EventClickArg } from '@fullcalendar/core';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import listPlugin from '@fullcalendar/list';
 import timeGridPlugin from '@fullcalendar/timegrid';
@@ -10,7 +11,7 @@ import type { Event } from './types';
 const getEvents = (): Event[] => {
   const scripts = document.querySelectorAll<HTMLScriptElement>('[data-element="event-data"]');
   const scriptsArray = Array.from(scripts);
-  
+
   const events = scriptsArray.reduce((acc, script) => {
     if (script.textContent) {
       const eventData = JSON.parse(script.textContent);
@@ -50,8 +51,9 @@ function showCustomModal() {
 
 function eventClick(arg: EventClickArg) {
   console.log('eventClick', arg.event.title);
-  
+
   const modalId = document.querySelector('#eventModal .modal-id') as HTMLElement;
+
   if (modalId) {
     modalId.textContent = arg.event.id; // Display the event's ID
   } else {
@@ -62,22 +64,21 @@ function eventClick(arg: EventClickArg) {
   const modalEndTime = document.querySelector('#eventModal .modal-end-time') as HTMLElement;
 
   if (modalStartTime && modalEndTime) {
-    if(arg.event.start) {
-        let startTime = new Date(arg.event.start);
-        modalStartTime.textContent = startTime.toLocaleString(); // Display the event's start time
-        console.log('eventClick start time:', startTime.toLocaleString());
+    if (arg.event.start) {
+      const startTime = new Date(arg.event.start);
+      modalStartTime.textContent = startTime.toLocaleString(); // Display the event's start time
+      console.log('eventClick start time:', startTime.toLocaleString());
     } else {
-        modalStartTime.textContent = 'Not specified';
+      modalStartTime.textContent = 'Not specified';
     }
 
-    if(arg.event.end) {
-        let endTime = new Date(arg.event.end);
-        modalEndTime.textContent = endTime.toLocaleString(); // Display the event's end time
-        console.log('eventClick end time:', endTime.toLocaleString());
+    if (arg.event.end) {
+      const endTime = new Date(arg.event.end);
+      modalEndTime.textContent = endTime.toLocaleString(); // Display the event's end time
+      console.log('eventClick end time:', endTime.toLocaleString());
     } else {
-        modalEndTime.textContent = 'Not specified';
+      modalEndTime.textContent = 'Not specified';
     }
-
   } else {
     throw new Error('modal start time or end time elements not found');
   }
@@ -93,8 +94,6 @@ function eventClick(arg: EventClickArg) {
     }
   }
 }
-
-
 
 const updateCalendar = (calendar: Calendar) => {
   const events = getEvents();

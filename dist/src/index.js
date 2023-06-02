@@ -50,7 +50,7 @@ function eventClick(arg) {
     const modalEndTime = document.querySelector('#eventModal .modal-end-time');
     if (modalStartTime && modalEndTime) {
         if (arg.event.start) {
-            let startTime = new Date(arg.event.start);
+            const startTime = new Date(arg.event.start);
             modalStartTime.textContent = startTime.toLocaleString();
             console.log('eventClick start time:', startTime.toLocaleString());
         }
@@ -58,7 +58,7 @@ function eventClick(arg) {
             modalStartTime.textContent = 'Not specified';
         }
         if (arg.event.end) {
-            let endTime = new Date(arg.event.end);
+            const endTime = new Date(arg.event.end);
             modalEndTime.textContent = endTime.toLocaleString();
             console.log('eventClick end time:', endTime.toLocaleString());
         }
