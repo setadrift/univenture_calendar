@@ -57,11 +57,13 @@ function eventClick(arg) {
         else {
             modalEndTime.textContent = 'End time: Not specified';
         }
-        if (arg.event.extendedProps && arg.event.extendedProps.location) {
-            modalLocation.textContent = `Location: ${arg.event.extendedProps.location}`;
+        const location = arg.event.extendedProps?.location;
+        if (location) {
+            modalLocation.textContent = `Location: ${location}`;
             modalLocation.style.display = 'block';
         }
         else {
+            modalLocation.textContent = 'Location: Not specified';
             modalLocation.style.display = 'none';
         }
     }
