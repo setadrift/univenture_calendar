@@ -39,7 +39,7 @@ function showCustomModal() {
 }
 function eventClick(arg) {
     console.log('eventClick', arg.event.title);
-    const modalId = document.querySelector('#eventModal .modal-id');
+    const modalId = document.querySelector('#eventModal #modal-title');
     if (modalId) {
         modalId.textContent = arg.event.id;
     }

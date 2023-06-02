@@ -51,9 +51,9 @@ function showCustomModal() {
 
 function eventClick(arg: EventClickArg) {
   console.log('eventClick', arg.event.title);
-
-  const modalId = document.querySelector('#eventModal .modal-id') as HTMLElement;
-
+  
+  const modalId = document.querySelector('#eventModal #modal-title') as HTMLElement;
+  
   if (modalId) {
     modalId.textContent = arg.event.id; // Display the event's ID
   } else {
