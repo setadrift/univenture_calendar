@@ -51,36 +51,34 @@ function showCustomModal() {
 
 function eventClick(arg: EventClickArg) {
   console.log('eventClick', arg.event.title);
-  
-  const modalId = document.querySelector('#eventModal #modal-title') as HTMLElement;
-  
-  if (modalId) {
-    modalId.textContent = arg.event.id; // Display the event's ID
-  } else {
-    throw new Error('modalId not found');
-  }
 
-  const modalStartTime = document.querySelector('#eventModal .modal-start-time') as HTMLElement;
-  const modalEndTime = document.querySelector('#eventModal .modal-end-time') as HTMLElement;
+  const modalStartTime = document.querySelector('#eventModal #modal-start-time') as HTMLElement;
+  const modalEndTime = document.querySelector('#eventModal #modal-end-time') as HTMLElement;
+  const modalLocation = document.querySelector('#eventModal #modal-location') as HTMLElement;
 
-  if (modalStartTime && modalEndTime) {
+  if (modalStartTime && modalEndTime && modalLocation) {
     if (arg.event.start) {
       const startTime = new Date(arg.event.start);
-      modalStartTime.textContent = startTime.toLocaleString(); // Display the event's start time
-      console.log('eventClick start time:', startTime.toLocaleString());
+      modalStartTime.textContent = `Start time: ${startTime.toLocaleString()}`;
     } else {
-      modalStartTime.textContent = 'Not specified';
+      modalStartTime.textContent = 'Start time: Not specified';
     }
 
     if (arg.event.end) {
       const endTime = new Date(arg.event.end);
-      modalEndTime.textContent = endTime.toLocaleString(); // Display the event's end time
-      console.log('eventClick end time:', endTime.toLocaleString());
+      modalEndTime.textContent = `End time: ${endTime.toLocaleString()}`;
     } else {
-      modalEndTime.textContent = 'Not specified';
+      modalEndTime.textContent = 'End time: Not specified';
+    }
+
+    if (arg.event.extendedProps && arg.event.extendedProps.location) {
+      modalLocation.textContent = `Location: ${arg.event.extendedProps.location}`;
+      modalLocation.style.display = 'block';
+    } else {
+      modalLocation.style.display = 'none';
     }
   } else {
-    throw new Error('modal start time or end time elements not found');
+    throw new Error('modal start time, end time, or location elements not found');
   }
 
   const modalElement = document.querySelector('.modal') as HTMLElement;
