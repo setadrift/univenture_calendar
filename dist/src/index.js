@@ -1,4 +1,4 @@
-// import 'flatpickr/dist/flatpickr.min.css';
+import 'flatpickr/dist/flatpickr.min.css';
 import { Calendar } from '@fullcalendar/core';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import listPlugin from '@fullcalendar/list';
@@ -50,8 +50,22 @@ function eventClick(arg) {
     const modalStartTime = document.querySelector('#eventModal .modal-start-time');
     const modalEndTime = document.querySelector('#eventModal .modal-end-time');
     if (modalStartTime && modalEndTime) {
-        modalStartTime.textContent = arg.event.start ? arg.event.start.toLocaleString() : 'Not specified';
-        modalEndTime.textContent = arg.event.end ? arg.event.end.toLocaleString() : 'Not specified';
+        if (arg.event.start) {
+            let startTime = new Date(arg.event.start);
+            modalStartTime.textContent = startTime.toLocaleString();
+            console.log('eventClick start time:', startTime.toLocaleString());
+        }
+        else {
+            modalStartTime.textContent = 'Not specified';
+        }
+        if (arg.event.end) {
+            let endTime = new Date(arg.event.end);
+            modalEndTime.textContent = endTime.toLocaleString();
+            console.log('eventClick end time:', endTime.toLocaleString());
+        }
+        else {
+            modalEndTime.textContent = 'Not specified';
+        }
     }
     else {
         throw new Error('modal start time or end time elements not found');
