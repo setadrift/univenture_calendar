@@ -69,7 +69,7 @@ function eventClick(arg) {
     else {
         throw new Error('modal start time or end time elements not found');
     }
-    const modalElement = document.querySelector('#eventModal');
+    const modalElement = document.querySelector('.modal');
     if (modalElement) {
         modalElement.style.display = 'block';
         const modalTitle = document.querySelector('#eventModal .modal-title');
